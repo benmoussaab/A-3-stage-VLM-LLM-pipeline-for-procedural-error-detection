@@ -10,7 +10,7 @@ from google.genai import types
 # ==============================================================================
 # IMPORTANT: Provide your Gemini API key via environment variable.
 API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_API_KEY_HERE")
-MODEL_ID = "gemini-2.5-flash"
+MODEL_ID = "gemini-3-flash-preview"
 
 # Input JSON from Stage 1 (VLM Describer)
 INPUT_JSON = "stage1_vlm_descriptions.json"
@@ -39,23 +39,50 @@ EXAMPLES_TEXT = """I am going to provide you with examples of how to clean my no
 
 ### EXAMPLE 1
 TRANSCRIPT:
-"[0.0s - 10.0s] The person is taking out a tortilla from a bag and placing it on a red cutting board.
-[5.0s - 15.0s] A person is placing a tortilla on a red cutting board, then opening a jar of Nutella and using a knife to spread it on the tortilla.
-[10.0s - 20.0s] The person is opening a jar, taking out a spoon, and spreading a chocolate spread onto a tortilla on a red cutting board.
-[15.0s - 25.0s] The person is spreading Nutella onto a tortilla using a knife.
-[20.0s - 30.0s] A person is spreading chocolate spread onto a tortilla using a knife on a red cutting board.
-[25.0s - 35.0s] The person is spreading a brown spread onto a tortilla using a knife, then adding banana slices on top.
-[30.0s - 40.0s] The person is using their hands to place banana slices on a tortilla spread with Nutella on a red cutting board.
-[35.0s - 45.0s] The person is placing banana slices on a tortilla spread with Nutella, then sprinkling cocoa powder on top.
-[40.0s - 50.0s] The person is using a pepper mill to sprinkle ground pepper onto a tortilla that already has chocolate spread and banana slices on it, then folds the tortilla in half.
-[45.0s - 55.0s] The person is using their hands to fold a tortilla into a taco shape, then using a knife to cut it in half.
-[50.0s - 60.0s] The person is pressing a tortilla on a red cutting board and then using a knife to cut it into two pieces.
-[55.0s - 65.0s] The person is using a knife to cut a sandwich in half on a red cutting board.
-[60.0s - 66.5s] The person is using a red cutting board to cut a sandwich into two halves, then placing the halves on a white plate.
-[65.0s - 66.5s] The person is using a whiteboard marker to write on a whiteboard."
+"[0.0s - 10.0s] The person is using their hands to remove a tortilla from a bag and place it on a red cutting board.\n[5.0s - 15.0s] The person is taking out a tortilla from a package and placing it on a red cutting board.\n[10.0s - 20.0s] The person is spreading a chocolate spread onto a tortilla using a knife.\n[15.0s - 25.0s] The person is using a knife to spread chocolate hazelnut spread onto a tortilla.\n[20.0s - 30.0s] The person is spreading chocolate hazelnut spread onto a tortilla using a knife.\n[25.0s - 35.0s] A person is spreading chocolate spread on a tortilla using a knife.\n[30.0s - 40.0s] A person is spreading a chocolate spread on a tortilla using a knife.\n[35.0s - 45.0s] The person is spreading a chocolate spread onto a tortilla using a knife.\n[40.0s - 50.0s] A person is spreading chocolate spread on a tortilla using a knife on a red cutting board.\n[45.0s - 55.0s] The person is using a black object to spread a brown substance onto a tortilla.\n[50.0s - 60.0s] The person is using a chocolate spreader to spread chocolate hazelnut spread onto a tortilla.\n[55.0s - 65.0s] The person is spreading a chocolate spread onto a tortilla using a spoon.\n[60.0s - 70.0s] The person is spreading chocolate spread on a tortilla and then adding quick oats from a container onto the tortilla.\n[65.0s - 75.0s] The person is pouring quick oats from a container onto a tortilla spread with chocolate spread, using a spoon to scoop the oats.\n[70.0s - 80.0s] The person is spreading a chocolate spread on a tortilla and then folding it into a half-moon shape using their hands.\n[75.0s - 85.0s] The person is folding a tortilla into a triangle using their hands.\n[80.0s - 90.0s] The person is using their hands to fold a tortilla into a triangle, then unfolding it and folding it again into a triangle.\n[85.0s - 95.0s] The person is tearing a tortilla into two pieces using their hands.\n[90.0s - 100.0s] The person is cutting a tortilla into four pieces using a knife on a red cutting board.\n[95.0s - 105.0s] The person is using their hands to pick up tortillas from a table and place them into a bowl.\n[100.0s - 105.0s] The person is using a knife to cut a tortilla."
 REFINED ACTIONS JSON:
-[{"step": "Place tortilla on cutting board", "start": 2.4, "end": 7.1}, {"step": "Use knife to scoop Nutella", "start": 11.8, "end": 17.1}, {"step": "Spread Nutella onto tortilla", "start": 17.1, "end": 29.9}, {"step": "Put banana slices on tortilla", "start": 31.4, "end": 39.0}, {"step": "Sprinkle cinnamon onto tortilla", "start": 39.8, "end": 46.6}, {"step": "Fold tortilla", "start": 46.6, "end": 53.2}, {"step": "Slice using knife", "start": 53.2, "end": 60.1}, {"step": "Place tortilla wedges on plate", "start": 60.1, "end": 63.4}]
-
+[
+    {
+      "step": "Place tortilla on table",
+      "start": 2.4,
+      "end": 10.6
+    },
+    {
+      "step": "Use knife to scoop Nutella",
+      "start": 13.2,
+      "end": 23.1
+    },
+    {
+      "step": "Spread Nutella onto tortilla",
+      "start": 23.1,
+      "end": 39.2
+    },
+    {
+      "step": "Sprinkle cinnamon onto tortilla",
+      "start": 48.0,
+      "end": 57.4
+    },
+    {
+      "step": "Pour a handful of oatmeals on tortilla",
+      "start": 60.0,
+      "end": 73.1
+    },
+    {
+      "step": "Fold tortilla",
+      "start": 73.8,
+      "end": 85.4
+    },
+    {
+      "step": "Rip tortilla by hands",
+      "start": 85.4,
+      "end": 94.3
+    },
+    {
+      "step": "Place tortilla wedges into bowl",
+      "start": 94.3,
+      "end": 102.0
+    }
+  ]
 ### EXAMPLE 2
 TRANSCRIPT:
 "[0.0s - 10.0s] The person is taking out a tortilla from a bag and placing it on a red cutting board.
@@ -91,64 +118,140 @@ REFINED ACTIONS JSON:
 
 ### EXAMPLE 3
 TRANSCRIPT:
-"[0.0s - 10.0s] The person is taking out a tortilla from a package and placing it on a red cutting board.
-[5.0s - 15.0s] The person is placing a tortilla on a red cutting board and then opening a jar of Nutella.
-[10.0s - 20.0s] The person is using a knife to spread Nutella onto a tortilla on a red cutting board.
-[15.0s - 25.0s] The person is spreading Nutella onto a tortilla using a knife.
-[20.0s - 30.0s] The person is spreading Nutella on a tortilla using a knife.
-[25.0s - 35.0s] The person is spreading Nutella on a tortilla using a knife, then sprinkling chopped bananas and sprinkles on top.
-[30.0s - 40.0s] The person is sprinkling a spice onto a tortilla using a spice shaker.
-[35.0s - 45.0s] The person is spreading Nutella on a tortilla using a knife.
-[40.0s - 50.0s] The person is spreading sliced bananas onto a tortilla that has chocolate spread on it, using their hands.
-[45.0s - 55.0s] The person is spreading a brown spread on a tortilla using a knife, then folding the tortilla in half.
-[50.0s - 60.0s] The person is folding a tortilla in half using their hands.
-[55.0s - 65.0s] The person is using a knife to cut a tortilla into two pieces on a red cutting board.
-[60.0s - 70.0s] The person is using a knife to cut a tortilla into four pieces on a red cutting board.
-[65.0s - 73.6s] The person is using a knife to cut a tortilla into four pieces on a red cutting board.
-[70.0s - 73.6s] The person is cutting a tortilla into two pieces using a knife."
+"[0.0s - 10.0s] The person is using their hands to take out a tortilla from a bag of Mission flour tortillas.\n[5.0s - 15.0s] The person is placing a tortilla on the floor, then picking it up and putting it back on the table.\n[10.0s - 20.0s] The person picks up a tortilla from the floor, places it on a cutting board, and uses a knife to cut it.\n[15.0s - 25.0s] The person is taking out a tortilla from a plastic bag, placing it on a red cutting board, and then cutting it into four equal pieces using a knife.\n[20.0s - 30.0s] A person is placing a tortilla on a red cutting board and then reaching for a box of raisins.\n[25.0s - 35.0s] The person is using their hands to open a red box of raisins and then sprinkling the raisins onto a tortilla on a red cutting board.\n[30.0s - 40.0s] The person is pouring raisins onto a tortilla using a red box of raisins.\n[35.0s - 45.0s] The person is sprinkling raisins onto a tortilla using a red container, then adding banana slices onto the tortilla.\n[40.0s - 50.0s] The person is using a knife to cut a tortilla on a red cutting board, and they are adding sliced bananas to the tortilla.\n[45.0s - 55.0s] The person is using their hand to place banana slices onto a tortilla on a red cutting board.\n[50.0s - 60.0s] The person is using their hands to fold a tortilla into a triangle on a red cutting board.\n[55.0s - 65.0s] The person is folding a tortilla into a triangle and then using a knife to cut it in half.\n[60.0s - 70.0s] A person is using a knife to cut a tortilla on a red cutting board.\n[65.0s - 75.0s] A person is using a knife to cut a tortilla into two pieces on a red cutting board.\n[70.0s - 80.0s] The person is using a knife to cut a tortilla into two pieces, then placing the pieces on a plate.\n[75.0s - 81.6s] The person is using a knife to cut a tortilla into four pieces and then placing them on a plate.\n[80.0s - 81.6s] The person is using a knife to cut a tortilla on a red cutting board."
 REFINED ACTIONS JSON:
-[{"step": "Place tortilla on cutting board", "start": 2.0, "end": 8.0}, {"step": "Use knife to scoop Nutella", "start": 12.2, "end": 17.7}, {"step": "Spread Nutella onto tortilla", "start": 17.7, "end": 28.1}, {"step": "Sprinkle cinnamon onto tortilla", "start": 33.2, "end": 40.8}, {"step": "Put banana slices on tortilla", "start": 41.8, "end": 49.3}, {"step": "Fold tortilla", "start": 50.2, "end": 57.0}, {"step": "Slice using knife", "start": 57.9, "end": 67.0}, {"step": "Place tortilla wedges on plate", "start": 67.0, "end": 70.4}]
-
+[
+    {
+      "step": "Drop tortilla",
+      "start": 2.3,
+      "end": 9.4
+    },
+    {
+      "step": "Discard tortilla and place a new one",
+      "start": 9.4,
+      "end": 19.4
+    },
+    {
+      "step": "Add a handful of raisins to tortilla",
+      "start": 26.3,
+      "end": 39.0
+    },
+    {
+      "step": "Put banana slices on tortilla",
+      "start": 41.1,
+      "end": 50.4
+    },
+    {
+      "step": "Fold tortilla",
+      "start": 53.7,
+      "end": 61.6
+    },
+    {
+      "step": "Slice using knife",
+      "start": 61.6,
+      "end": 71.8
+    },
+    {
+      "step": "Place tortilla wedges on plate",
+      "start": 73.5,
+      "end": 79.5
+    }
+  ]
 ### EXAMPLE 4
 TRANSCRIPT:
-"[0.0s - 10.0s] The person is using a red cutting board to place a tortilla on it.
-[5.0s - 15.0s] The person is placing a tortilla on a red cutting board and then using a knife to spread Nutella on it.
-[10.0s - 20.0s] The person is spreading Nutella onto a tortilla using a knife.
-[15.0s - 25.0s] The person is spreading Nutella onto a tortilla using a knife.
-[20.0s - 30.0s] A person is spreading Nutella onto a tortilla using a knife.
-[25.0s - 35.0s] The person is spreading a chocolate spread on a tortilla using a knife.
-[30.0s - 40.0s] The person is sprinkling a spice onto the tortilla using a spice shaker.
-[35.0s - 45.0s] The person is spreading a dark brown spread on a white tortilla using a knife, then adding sliced bananas on top.
-[40.0s - 50.0s] The person is using their hands to place banana slices onto a tortilla spread with Nutella.
-[45.0s - 55.0s] The person is using a knife to cut a tortilla into a half-moon shape on a red cutting board.
-[50.0s - 60.0s] The person is using a knife to cut a tortilla into two pieces on a red cutting board.
-[55.0s - 65.0s] A person is using a knife to cut a quesadilla on a red cutting board.
-[60.0s - 70.0s] The person is using a knife to cut a quesadilla into two halves on a red cutting board.
-[65.0s - 71.1s] The person is using a knife to cut a quesadilla into four pieces and then placing them on a plate.
-[70.0s - 71.1s] The person is stirring a pot on the stove using a wooden spoon."
-REFINED ACTIONS JSON:
-[{"step": "Place tortilla on cutting board", "start": 2.4, "end": 8.3}, {"step": "Use knife to scoop Nutella", "start": 11.2, "end": 16.3}, {"step": "Spread Nutella onto tortilla", "start": 16.3, "end": 29.2}, {"step": "Sprinkle cinnamon onto tortilla", "start": 31.0, "end": 38.7}, {"step": "Put banana slices on tortilla", "start": 39.3, "end": 46.8}, {"step": "Fold tortilla", "start": 46.8, "end": 53.1}, {"step": "Slice using knife", "start": 53.1, "end": 62.9}, {"step": "Place tortilla wedges on plate", "start": 62.9, "end": 68.5}]
+"[0.0s - 10.0s] The person is taking out a tortilla from a plastic bag using their hands.\n[5.0s - 15.0s] The person is spreading chocolate hazelnut spread onto a tortilla using a knife.\n[10.0s - 20.0s] The person is spreading a chocolate spread onto a tortilla using a knife.\n[15.0s - 25.0s] The person is spreading a chocolate spread onto a tortilla using a knife.\n[20.0s - 30.0s] The person is spreading a chocolate spread on a tortilla using a knife.\n[25.0s - 35.0s] The person is spreading a brown substance onto a tortilla using a spoon and then adding pieces of a yellow and black bag of chips onto the tortilla.\n[30.0s - 40.0s] The person is pouring raisins from a yellow and black container onto a tortilla, then adding a dark brown spread from a bottle with a black cap.\n[35.0s - 45.0s] The person is sprinkling a spice onto the tortilla using a shaker with a black lid.\n[40.0s - 50.0s] The person is sprinkling cinnamon from a shaker onto a tortilla that has been spread with a brown substance, then folding the tortilla into a triangle.\n[45.0s - 55.0s] The person is sprinkling cinnamon from a bottle onto a tortilla, then folding the tortilla into a half-moon shape and cutting it with a knife.\n[50.0s - 60.0s] The person is using a knife to cut a tortilla into two pieces on a red cutting board.\n[55.0s - 65.0s] The person is using a knife to cut a tortilla into two pieces on a red cutting board.\n[60.0s - 65.5s] The person is wrapping a sandwich with a tortilla using their hands, then placing it on a white plate.\n[65.0s - 65.5s] A person is pointing at a wooden cabinet."
 
+REFINED ACTIONS JSON:
+[
+    {
+      "step": "Place tortilla on cutting board",
+      "start": 2.3,
+      "end": 7.9
+    },
+    {
+      "step": "Use knife to scoop Nutella",
+      "start": 7.9,
+      "end": 16.1
+    },
+    {
+      "step": "Spread Nutella onto tortilla",
+      "start": 16.1,
+      "end": 24.7
+    },
+    {
+      "step": "Put banana slices on tortilla",
+      "start": 26.0,
+      "end": 36.1
+    },
+    {
+      "step": "Sprinkle cinnamon onto tortilla",
+      "start": 36.1,
+      "end": 47.0
+    },
+    {
+      "step": "Fold tortilla",
+      "start": 47.0,
+      "end": 50.6
+    },
+    {
+      "step": "Slice using knife",
+      "start": 50.6,
+      "end": 58.3
+    },
+    {
+      "step": "Place tortilla wedges on plate",
+      "start": 58.3,
+      "end": 62.1
+    }
+  ]
+                                         
 ### EXAMPLE 5
 TRANSCRIPT:
-"[0.0s - 10.0s] The person is using their hands to open a plastic bag containing tortillas.
-[5.0s - 15.0s] The person is opening a bag of tortillas, taking out one tortilla, and placing it on a red cutting board.
-[10.0s - 20.0s] The person is placing a tortilla on a red cutting board and then using a knife to cut it.
-[15.0s - 25.0s] The person is using a knife to spread chocolate spread onto a tortilla on a red cutting board.
-[20.0s - 30.0s] The person is spreading chocolate hazelnut spread onto a tortilla using a knife.
-[25.0s - 35.0s] A person is spreading chocolate spread onto a tortilla using a spatula.
-[30.0s - 40.0s] The person is spreading chocolate spread on a tortilla using a knife.
-[35.0s - 45.0s] The person is spreading chocolate spread on a tortilla using a knife.
-[40.0s - 50.0s] The person is spreading chocolate spread on a tortilla using a knife.
-[45.0s - 55.0s] The person is sprinkling cocoa powder onto a tortilla using a small container, then adding banana slices on top.
-[50.0s - 60.0s] The person is using a knife to cut a piece of bread into smaller pieces, then placing the pieces on a tortilla spread with chocolate spread, and finally rolling up the tortilla.
-[55.0s - 65.0s] The person is folding a tortilla into a half-moon shape and then using a knife to cut it into two pieces.
-[60.0s - 70.0s] The person is using a knife to cut a quesadilla on a red cutting board.
-[65.0s - 75.0s] The person is using a knife to cut a quesadilla on a red cutting board.
-[70.0s - 76.2s] The person is using a red cutting board to cut a quesadilla into two pieces, then placing them on a white plate.
-[75.0s - 76.2s] The person is using a knife to cut something on a cutting board."
+"[0.0s - 10.0s] The person is taking out a tortilla from a bag and placing it on a red cutting board.\n[5.0s - 15.0s] A person is placing a tortilla on a red cutting board and then opening a jar of Nutella.\n[10.0s - 20.0s] The person is spreading Nutella onto a tortilla using a knife.\n[15.0s - 25.0s] The person is spreading Nutella onto a tortilla using a knife.\n[20.0s - 30.0s] The person is spreading Nutella onto a tortilla using a knife.\n[25.0s - 35.0s] The person is spreading Nutella onto a tortilla using a knife.\n[30.0s - 40.0s] The person is spreading Nutella on a tortilla using a knife and then adding banana slices on top.\n[35.0s - 45.0s] The person is using their hands to place banana slices on a tortilla spread with Nutella, while other ingredients and tools are visible on the table.\n[40.0s - 50.0s] The person is using a knife to spread chocolate spread on a tortilla, which is placed on a red cutting board.\n[45.0s - 55.0s] The person is sprinkling cocoa powder onto a tortilla using a small container with a black lid.\n[50.0s - 60.0s] The person is sprinkling cocoa powder onto a tortilla, then folding it into a burrito.\n[55.0s - 65.0s] The person is using their hands to fold a tortilla into a half-moon shape on a red cutting board.\n[60.0s - 70.0s] The person is pressing a folded tortilla with their hands on a red cutting board, then using a knife to cut the tortilla into two halves.\n[65.0s - 75.0s] The person is using a knife to cut a tortilla into two pieces on a red cutting board.\n[70.0s - 79.3s] The person is spreading a white substance on a tortilla using a knife, then folding the tortilla in half and placing it on a plate.\n[75.0s - 79.3s] The person is placing a jar on the table, which appears to be a chocolate spread, next to a plate with a tortilla and a spoon."
+                                         
 REFINED ACTIONS JSON:
-[{"step": "Place tortilla on cutting board", "start": 2.8, "end": 15.0}, {"step": "Use knife to scoop Nutella", "start": 15.6, "end": 23.9}, {"step": "Spread Nutella onto tortilla", "start": 23.9, "end": 39.1}, {"step": "Sprinkle cinnamon onto tortilla", "start": 42.5, "end": 48.5}, {"step": "Put banana slices on tortilla", "start": 48.5, "end": 57.0}, {"step": "Fold tortilla", "start": 57.0, "end": 62.2}, {"step": "Slice using knife", "start": 62.2, "end": 70.6}, {"step": "Place tortilla wedges on plate", "start": 70.6, "end": 74.0}]
+[
+    {
+      "step": "Place tortilla on cutting board",
+      "start": 2.9,
+      "end": 7.4
+    },
+    {
+      "step": "Use knife to scoop Nutella",
+      "start": 12.1,
+      "end": 18.6
+    },
+    {
+      "step": "Spread Nutella onto tortilla",
+      "start": 18.6,
+      "end": 32.8
+    },
+    {
+      "step": "Put banana slices on tortilla",
+      "start": 32.8,
+      "end": 41.6
+    },
+    {
+      "step": "Sprinkle cinnamon onto tortilla",
+      "start": 44.7,
+      "end": 54.3
+    },
+    {
+      "step": "Fold tortilla",
+      "start": 56.4,
+      "end": 62.4
+    },
+    {
+      "step": "Slice using knife",
+      "start": 63.6,
+      "end": 71.4
+    },
+    {
+      "step": "Place tortilla wedges on plate",
+      "start": 71.4,
+      "end": 75.6
+    }
+  ]
 
 I will now provide the transcript I want you to clean. Please follow the style above:
 """
@@ -163,8 +266,8 @@ def clean_transcripts():
         return
 
     config = types.GenerateContentConfig(
-        thinking_config=types.ThinkingConfig(thinking_budget=-1),
-        temperature=1.0,
+        thinking_config=types.ThinkingConfig(thinking_level="HIGH"),
+        temperature=0.0,
         system_instruction="""You are a Transcript Refinement Assistant.
 Your task is to take a raw, noisy VLM transcript and convert it into a clean, segmented list of actions.
 
@@ -172,12 +275,12 @@ FIDELITY PROTOCOL:
 - DO NOT assume the person followed the recipe correctly.
 - KEEP every action that occurs, even if it seems wrong, unusual, or out of order.
 - KEEP any mention of spills, slips, drops, or corrections.
-- KEEP any unusual ingredients or extra steps mentioned (e.g., adding honey, oats, or using a different tool).
+- KEEP any unusual ingredients or extra steps mentioned .
 - DO NOT skip or "correct" mistakes to make the output look like a normal recipe execution.
 - Your output should be a factual representation of the observed behavior, including all errors and noise that represent real actions.
 
 Noise to filter out:
-- Repetitive phrases (e.g., "The person is...")
+- Repetitive phrases 
 - Camera motion descriptions.
 - Irrelevant background objects unless they are being used.
 - Redundant overlapping segments (merge them into a single clean span)."""
