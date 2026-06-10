@@ -267,7 +267,7 @@ def clean_transcripts():
 
     config = types.GenerateContentConfig(
         thinking_config=types.ThinkingConfig(thinking_level="HIGH"),
-        temperature=0.0,
+        temperature=1.0,
         system_instruction="""You are a Transcript Refinement Assistant.
 Your task is to take a raw, noisy VLM transcript and convert it into a clean, segmented list of actions.
 
