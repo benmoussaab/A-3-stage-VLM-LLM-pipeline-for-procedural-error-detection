@@ -1,3 +1,6 @@
+![EgoPER 3-Stage Architecture](assets/architecture.jpg)
+![Performance Comparison Table](assets/performance_table.png)
+
 # EgoPER 3-Stage Pipeline: Egocentric Procedural Error Recognition
 
 This repository contains the inference code for a **3-Stage Video-Language Model (VLM) + Large Language Model (LLM) pipeline** designed to detect normal execution, procedural modifications, errors, and omitted steps in egocentric (first-person) cooking/assembly videos.
